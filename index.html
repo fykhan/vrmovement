@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>VR Demo</title>
+		<script type="module" src="index.js"></script>
+        <script type="importmap">
+            {
+                "imports": {
+                    "three": "./build/three.module.js",
+                    "three/addons/": "./jsm/",
+                    "models": "./models/"
+                }
+            }
+        </script>
+	</head>
+	<body>
+		<canvas style="position:aboslute;"></canvas>
+
+		<input type="checkbox" id="canaudio" />
+		<label for="canaudio">Toggle Audio</label>
+		<div
+			style="position: fixed; right: 0; top: 0; background: #fff8"
+			id="overlay"
+		></div>
+
+	</body>
+</html>

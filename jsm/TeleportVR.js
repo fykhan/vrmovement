@@ -48,12 +48,12 @@ class TeleportVR {
         this._target.add(_mesh2);
         this._target.visible = false;
 
-        const _geometry = new THREE.TubeGeometry(this._vectorArray, 9, 0.1, 5, false)
+        const _geometry = new THREE.TubeGeometry(this._vectorArray, 9, 0.01, 5, false)
         this._curve = new THREE.Mesh(
             _geometry,
             new THREE.MeshPhongMaterial({
                 color: 0xff0000,
-                wireframe: true,
+                // wireframe: true,
             })
         );
         this._curve.visible = false;
