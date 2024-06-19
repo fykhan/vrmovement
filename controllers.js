@@ -160,25 +160,15 @@ gamepad.addEventListener('axes0MoveMiddle', handleMove, true);
 gamepad.addEventListener('axes2MoveMiddle', handleMove, true);
 
 function handleUp() {
-
-		console.log("up");
-		// Get the direction the camera is facing
-		const direction = camera.getWorldDirection(tempVec);
+	console.log("up");
+	const direction = camera.getWorldDirection(tempVec);
 	
-		// Scale the direction vector to represent a step
-		const stepSize = 0.5;
-		direction.multiplyScalar(stepSize);
-	
-		// Do the locomotion
-		locomotion(direction);
-	
-		// clean up
-		guidingController = null;
-		guidelight.intensity = 0;
-		this.remove(guideline);
-		scene.remove(guidesprite);
+	const stepSize = 0.5;
+	direction.multiplyScalar(stepSize);
+	locomotion(direction);
 
 }
+
 // function handleUpEnd({detail}) {
 // 	onSelectEnd.bind(detail.controller)();
 // }
