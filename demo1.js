@@ -9,9 +9,6 @@ import {
 } from './scene.js';
 import { rafCallbacks } from "./controllers.js";
 
-
-
-
 function render(time) {
 
     rafCallbacks.forEach(cb => cb(time));

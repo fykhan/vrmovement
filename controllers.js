@@ -16,6 +16,7 @@ function positionAtT(inVec,t,p,v,g) {
 
 function locomotion(offset) {
     cameraGroup.position.add(offset);
+	cameraGroup.position.y = 0;
 }
 
 // Utility Vectors
