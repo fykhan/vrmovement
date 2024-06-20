@@ -150,7 +150,7 @@ rafCallbacks.add(() => {
 function handleMove(vector) {
 	// Turn left
 	console.log(vector);
-	let direction = new THREE.Vector3(vector.x, 0, vector.y).multiplyScalar(0.05);
+	let direction = new THREE.Vector3(vector.x, 0, vector.y).multiplyScalar(0.01);
 	locomotion(direction);
 }
 
