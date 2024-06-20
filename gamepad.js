@@ -31,6 +31,7 @@ rafCallbacks.add(() => {
 		if (old) {
 			data.buttons.forEach((value,i)=>{
 				if (value !== old.buttons[i]) {
+					console.log('button pressed');
 					if (value === 1) {
 						dispatchEvent(`button${i}Down`, {value, source, controller,data});
 					} else {
@@ -38,20 +39,22 @@ rafCallbacks.add(() => {
 					}
 				}
 			});
-			data.axes.forEach((value,i)=>{
-				if (value !== old.axes[i]) {
-					dispatchEvent(`axes${i}Move`, {value, source, controller,data});
-					if (old.axes[i] === 0) {
-						dispatchEvent(`axes${i}MoveStart`, {value, source, controller,data});
+			let vector = { x: 0, y: 0 };
+
+			data.axes.forEach((value, i) => {
+				if (value !== 0) {
+					if (i === 2) {
+						vector.x = value;
+					} else if (i === 3) {
+						vector.y = value;
 					}
-					if (Math.abs(old.axes[i]) < 0.5 && Math.abs(value) > 0.5) {
-						dispatchEvent(`axes${i}MoveMiddle`, {value, source, controller,data});
-					}
-					if (value === 0) {
-						dispatchEvent(`axes${i}MoveEnd`, {value, source, controller,data});
-					}
+				};			
+				if (vector.x !== 0 || vector.y !== 0){
+					console.log(vector);
+					dispatchEvent(`axesMove`, {value, vector, source, controller, data});
 				}
 			});
+
 		}
 		prevGamePads.set(source, data);
 	}

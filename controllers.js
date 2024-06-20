@@ -146,37 +146,15 @@ rafCallbacks.add(() => {
 	}
 });
 
-function handleMove({detail}) {
+
+function handleMove(vector) {
 	// Turn left
-	console.log(detail.value);
-	if (detail.value > 0) {
-		cameraGroup.rotation.y -= Math.PI/4;
-	}
-	// Turn right
-	if (detail.value < 0) {
-		cameraGroup.rotation.y += Math.PI/4;
-	}
-}
-gamepad.addEventListener('axes0MoveMiddle', handleMove, true);
-gamepad.addEventListener('axes2MoveMiddle', handleMove, true);
-
-function handleUp() {
-	console.log("up");
-	const direction = camera.getWorldDirection(tempVec);
-	
-	const stepSize = 0.5;
-	direction.multiplyScalar(stepSize);
+	console.log(vector);
+	let direction = new THREE.Vector3(vector.x, 0, vector.y).multiplyScalar(0.05);
 	locomotion(direction);
-
 }
 
-// function handleUpEnd({detail}) {
-// 	onSelectEnd.bind(detail.controller)();
-// }
-gamepad.addEventListener('axes1MoveMiddle', handleUp, true);
-gamepad.addEventListener('axes3MoveMiddle', handleUp, true);
-// gamepad.addEventListener('axes1MoveEnd', handleUpEnd, true);
-// gamepad.addEventListener('axes3MoveEnd', handleUpEnd, true);
+gamepad.addEventListener('axesMove', (event) => {handleMove(event.detail.vector)});
 
 export {
 	controller1,
