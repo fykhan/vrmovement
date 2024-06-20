@@ -150,8 +150,10 @@ rafCallbacks.add(() => {
 function handleMove(vector) {
 	// Turn left
 	console.log(vector);
-	let direction = new THREE.Vector3(vector.x, 0, vector.y).multiplyScalar(0.01);
-	locomotion(direction);
+	let userRotation = renderer.xr.getCamera(camera).rotation;
+	let offset = new THREE.Vector3(vector.x, 0, vector.y).multiplyScalar(0.03);
+	offset.applyEuler(userRotation);
+	locomotion(offset);
 }
 
 gamepad.addEventListener('axesMove', (event) => {handleMove(event.detail.vector)});
