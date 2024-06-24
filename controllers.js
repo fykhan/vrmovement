@@ -166,8 +166,8 @@ rafCallbacks.add(() => {
 
 function handleMove(vector, controllerIndex) {
 	if (controllerIndex === 2) {
-		let userRotation = cameraGroup.rotation;
-		let offset = new THREE.Vector3(-vector.x, 0, -vector.y).multiplyScalar(0.03);
+		let userRotation = camera.rotation;
+		let offset = new THREE.Vector3(vector.x, 0, vector.y).multiplyScalar(0.03);
 		offset.applyEuler(userRotation);
     	locomotion(offset);
 	}
