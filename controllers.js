@@ -7,6 +7,10 @@ import {
 } from './gamepad.js';
 import * as THREE from 'three';
 
+
+const controllers = []; // This array will hold references to controller objects
+
+
 function positionAtT(inVec,t,p,v,g) {
 	inVec.copy(p);
 	inVec.addScaledVector(v,t);
@@ -15,8 +19,16 @@ function positionAtT(inVec,t,p,v,g) {
 }
 
 function locomotion(offset) {
-    cameraGroup.position.add(offset);
+
+	cameraGroup.position.add(offset);
 	cameraGroup.position.y = 0;
+}
+
+function orientate(offset) {
+	const sensitivity = 0.01;
+	let yRotationAmount = offset.x * sensitivity;
+	cameraGroup.rotation.y -= yRotationAmount;
+	cameraGroup.updateMatrixWorld();
 }
 
 // Utility Vectors
@@ -55,14 +67,21 @@ const guidesprite = new THREE.Mesh(
 guidesprite.rotation.x = -Math.PI/2;
 
 const controller1 = renderer.xr.getController(0);
+controllers.push(controller1);
+controller1.addEventListener('connected', (event) => {
+    console.log('Controller 0 connected', event.data);
+});
 controller1.addEventListener('selectstart', onSelectStart);
 controller1.addEventListener('selectend', onSelectEnd);
 cameraGroup.add(controller1);
 let guidingController = null;
-
 const controller2 = renderer.xr.getController(1);
+controllers.push(controller2);
 controller2.addEventListener('selectstart', onSelectStart);
 controller2.addEventListener('selectend', onSelectEnd);
+controller2.addEventListener('connected', (event) => {
+    console.log('Controller 1 connected', event.data);
+});
 cameraGroup.add(controller2);
 
 const controllerModelFactory = new XRControllerModelFactory();
@@ -78,7 +97,6 @@ controllerGrip2.add( model2 );
 cameraGroup.add( controllerGrip2 );
 
 function onSelectStart() {
-	console.log("selectstart");
 	guidingController = this;
 	guidelight.intensity = 1;
 	this.add(guideline);
@@ -86,13 +104,12 @@ function onSelectStart() {
 }
 
 function onSelectEnd() {
-	console.log("selectend");
 	if (guidingController === this) {
 
 		// first work out vector from feet to cursor
 
 		// feet position
-		const feetPos = renderer.xr.getCamera(camera).getWorldPosition(tempVec);
+		const feetPos = cameraGroup.getWorldPosition(tempVec);
 		feetPos.y = 0;
 
 		// cursor position
@@ -147,16 +164,20 @@ rafCallbacks.add(() => {
 });
 
 
-function handleMove(vector) {
-	// Turn left
-	console.log(vector);
-	let userRotation = renderer.xr.getCamera(camera).rotation;
-	let offset = new THREE.Vector3(vector.x, 0, vector.y).multiplyScalar(0.03);
-	offset.applyEuler(userRotation);
-	locomotion(offset);
+function handleMove(vector, controllerIndex) {
+	if (controllerIndex === 2) {
+		let userRotation = cameraGroup.rotation;
+		let offset = new THREE.Vector3(-vector.x, 0, -vector.y).multiplyScalar(0.03);
+		offset.applyEuler(userRotation);
+    	locomotion(offset);
+	}
+	else{
+		let offset = new THREE.Vector3(vector.x, 0, vector.y);
+		orientate(offset);
+	}
 }
 
-gamepad.addEventListener('axesMove', (event) => {handleMove(event.detail.vector)});
+gamepad.addEventListener('axesMove', (event) => {handleMove(event.detail.vector, event.detail.activeController)});	
 
 export {
 	controller1,

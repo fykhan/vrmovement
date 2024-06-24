@@ -19,10 +19,10 @@ function dispatchEvent(type, detail) {
 
 rafCallbacks.add(() => {
 	const session = renderer.xr.getSession();
-	let i = 0;
+	let activeController = 0;
 	if (session) for (const source of session.inputSources) {
 		if (!source.gamepad) continue;
-		const controller = renderer.xr.getController(i++);
+		const controller = renderer.xr.getController(activeController++);
 		const old = prevGamePads.get(source);
 		const data = {
 			buttons: source.gamepad.buttons.map(b => b.value),
@@ -31,7 +31,6 @@ rafCallbacks.add(() => {
 		if (old) {
 			data.buttons.forEach((value,i)=>{
 				if (value !== old.buttons[i]) {
-					console.log('button pressed');
 					if (value === 1) {
 						dispatchEvent(`button${i}Down`, {value, source, controller,data});
 					} else {
@@ -50,8 +49,7 @@ rafCallbacks.add(() => {
 					}
 				};			
 				if (vector.x !== 0 || vector.y !== 0){
-					console.log(vector);
-					dispatchEvent(`axesMove`, {value, vector, source, controller, data});
+					dispatchEvent(`axesMove`, {value, vector, source, controller, activeController});
 				}
 			});
 
