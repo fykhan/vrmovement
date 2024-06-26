@@ -32,10 +32,14 @@ camera.add(light);
 cameraGroup.add(camera);
 scene.add(cameraGroup);
 
+const dummyCamera = new THREE.Object3D();
+camera.add(dummyCamera);
+
+cameraGroup.quaternion.copy(camera.quaternion);
+
 const renderer = new THREE.WebGLRenderer({ antialias: true });
 const controls = new OrbitControls(camera, renderer.domElement);
 controls.maxPolarAngle = Math.PI * 0.5;
-
 
 renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -161,5 +165,6 @@ export {
 	cameraGroup,
 	camera,
 	floor,
-	controls
+	controls, 
+
 }

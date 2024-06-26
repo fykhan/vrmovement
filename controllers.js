@@ -20,6 +20,7 @@ function positionAtT(inVec,t,p,v,g) {
 
 function locomotion(offset) {
 
+	offset.applyQuaternion(cameraGroup.quaternion);
 	cameraGroup.position.add(offset);
 	cameraGroup.position.y = 0;
 }
@@ -166,8 +167,9 @@ rafCallbacks.add(() => {
 
 function handleMove(vector, controllerIndex) {
 	if (controllerIndex === 2) {
+		console.log(vector);
 		let userRotation = camera.rotation;
-		let offset = new THREE.Vector3(vector.x, 0, vector.y).multiplyScalar(0.03);
+		let offset = new THREE.Vector3(vector.x, 0, vector.y).multiplyScalar(0.07);
 		offset.applyEuler(userRotation);
     	locomotion(offset);
 	}
