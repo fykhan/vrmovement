@@ -1,7 +1,9 @@
 **VR Movement Demo**
+
 This demo focuses on creating an immersive virtual reality (VR) environment using WebXR technologies where users can move around using controllers, and explore a 3D scene rendered space using Three.js.
 
 **Overview**
+
 The project is divided into three main components:
 
 scene.js: Manages the rendering of the 3D scene, including setting up the camera, lights, objects, and controls.
@@ -10,6 +12,7 @@ controllers.js: Deals with the interactions with VR controllers, locomotion with
 
 
 **Key Features**
+
 Virtual Reality Environment: Users can immerse themselves in a virtual world using VR headsets.
 Controller Interaction: Users can interact with objects and control their movement using VR controllers.
 Object Rendering: Various 3D objects are rendered in the scene, enhancing the user experience.
@@ -17,6 +20,7 @@ Guideline and Cursor: Visual aids like a guideline, light, and target sprite ass
 
 
 **Usage**
+
 Open the website in a compatible browser that supports WebXR.
 Put on your VR headset and use the controllers to interact with the virtual environment.
 Explore the 3D scene, move around, and engage with objects using the provided controller functionalities.
