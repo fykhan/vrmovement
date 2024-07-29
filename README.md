@@ -1,4 +1,4 @@
-#VR Movement Demo
+//VR Movement Demo
 This demo focuses on creating an immersive virtual reality (VR) environment using WebXR technologies where users can move around using controllers, and explore a 3D scene rendered space using Three.js.
 
 Overview
